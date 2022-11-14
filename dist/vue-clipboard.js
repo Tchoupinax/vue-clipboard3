@@ -50,7 +50,7 @@ var VueClipboard = {
     }
 
     Vue.directive('clipboard', {
-      bind: function (el, binding, vnode) {
+      beforeMount: function (el, binding, vnode) {
         if (binding.arg === 'success') {
           el._vClipboard_success = binding.value
         } else if (binding.arg === 'error') {
@@ -72,7 +72,7 @@ var VueClipboard = {
           el._vClipboard = clipboard
         }
       },
-      update: function (el, binding) {
+      updated: function (el, binding) {
         if (binding.arg === 'success') {
           el._vClipboard_success = binding.value
         } else if (binding.arg === 'error') {
@@ -82,7 +82,7 @@ var VueClipboard = {
           el._vClipboard.action = function () { return binding.arg === 'cut' ? 'cut' : 'copy' }
         }
       },
-      unbind: function (el, binding) {
+      unmounted: function (el, binding) {
         // FIXME: investigate why $element._vClipboard was missing
         if (!el._vClipboard) return
         if (binding.arg === 'success') {
